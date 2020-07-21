@@ -1,0 +1,12 @@
+[{
+  "description" : "An imaginary server config file",
+  "logs" : {"level":"verbose", "dir":"/var/log"},
+  "host" : "antlr.org",
+  "admin": ["parrt", "tombu"],
+  "aliases": [  ],
+  "Spaces": { },
+  "keys":[1,2,3,4],
+  "null_": null,
+  "bool_": true,
+  "structs":[{"a":"a","b":"2"}]
+}]

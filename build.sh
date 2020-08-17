@@ -14,3 +14,6 @@ $go mod edit -replace github.com/xiazemin/json-parser/antlr/jsonToAll/generator=
 export GOPROXY=https://goproxy.cn
 
 go run ./
+
+
+https://walmartlabs.github.io/json-to-simple-graphql-schema/

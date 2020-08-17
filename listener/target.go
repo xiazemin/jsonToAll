@@ -8,7 +8,7 @@ type Target interface {
  ExitObj(typeStr,valStr string,isEnd bool)string
  PostExitObj(typeStr,valStr string)string
 // ExitPair is called when production pair is exited.
- ExitPair(ketStr,typeStr,valStr string)string
+ ExitPair(index int,ketStr,typeStr,valStr,valType string)(string,string)
 // ExitArr is called when production arr is exited.
  ExitArr(typeStr,valStr string)string
 // ExitValue is called when production value is exited.

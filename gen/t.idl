@@ -1,0 +1,36 @@
+namespace php json.to.idl 
+struct  Logs {
+1: string level
+2: string dir
+}
+struct Aliases{
+}
+struct  Spaces {
+}
+struct Null_{
+}
+struct Structs{
+1: string a
+2: string b
+3: i64 c
+4: double d
+5: double f
+6: i32 g
+}
+
+struct GeneratedStruct {
+1: string description
+2: Logs logs
+3: string host
+4: list<string> admin
+5: list<Aliases> aliases
+6: Spaces Spaces
+7: list<i32> keys
+8: Null_ null_
+9: bool bool_
+10: list<Structs> structs
+}
+
+struct GeneratedArr {
+ 1:  list<GeneratedStruct> generatedStruct 
+}

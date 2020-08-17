@@ -18,7 +18,7 @@ func (t*GoTarget)PostExitObj(typeStr,valStr string)string{
 	return "}"
 }
 // func (t*GoTarget)ExitPair is called when production pair is exited.
-func (t*GoTarget)ExitPair(keyStr,typeStr,valStr string)string{
+func (t*GoTarget)ExitPair(index int,keyStr,typeStr,valStr,valType string)(string,string){
 	/*if typeStr=="struct"{
 		return captical(stripQuotes(keyStr)) +valStr
 	}
@@ -27,7 +27,7 @@ func (t*GoTarget)ExitPair(keyStr,typeStr,valStr string)string{
 	}
 
 	 */
-	return captical(stripQuotes(keyStr)) +" "+valStr  +" `json:\""+stripQuotes(keyStr)+"\"`"//+typeStr
+	return "",captical(stripQuotes(keyStr)) +" "+valStr  +" `json:\""+stripQuotes(keyStr)+"\"`"//+typeStr
 }
 // func (t*GoTarget)ExitArr is called when production arr is exited.
 func (t*GoTarget)ExitArr(typeStr,valStr string)string{

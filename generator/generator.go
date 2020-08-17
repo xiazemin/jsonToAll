@@ -7,7 +7,7 @@ import (
 	"github.com/xiazemin/json-parser/antlr/jsonToAll/parser"
 )
 
-func Gen(name ,genType string)(string,string){
+func Gen(name ,genType string)(string,string,[]string){
 	s:=string(file.GetJson(name))
 	in:=antlr.NewInputStream(
 		s,
@@ -23,10 +23,12 @@ func Gen(name ,genType string)(string,string){
 		l=listener.NewJsonToGoListener(&listener.GoTarget{})
 	case "kv":
 		l=listener.NewJsonToGoListener(&listener.KVTarget{})
+	case "idl":
+		l=listener.NewJsonToGoListener(&listener.IdlTarget{})
 
 	}
 
 	antlr.ParseTreeWalkerDefault.Walk(l,par.Json())
 	//l.PrintGocodeMap()
-	return s,l.JsonStr
+	return s,l.JsonStr,l.SubStructs
 }

@@ -9,15 +9,21 @@ import (
 )
 
 func main()  {
-	strOri,strGen:=generator.Gen("./t.json","go")
+	strOri,strGen,_:=generator.Gen("./t.json","go")
 	fmt.Println(strOri)
 	log.Println(strGen)
-
 	file.PutGoLang("./gen/t.go",strGen)
-	strJsonOri,strJsonGen:=generator.Gen("./t.json","json")
+
+	strJsonOri,strJsonGen,_:=generator.Gen("./t.json","json")
 	fmt.Println(strJsonGen)
 	log.Println(strJsonOri)
-
 	file.PutJson("./gen/t.json",strJsonGen)
+
+
+	strIdlOri,strIdlGen,subStructs:=generator.Gen("./t.json","idl")
+	fmt.Println(strIdlOri)
+	log.Println(strIdlGen)
+	//fmt.Println(subStructs,len(subStructs))
+	file.PutIdl("./gen/t.idl",subStructs,strIdlGen)
 }
 

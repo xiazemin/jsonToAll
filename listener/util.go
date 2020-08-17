@@ -11,6 +11,20 @@ func stripQuotes(s string) string {
 	return s[1 : len(s)-1]
 }
 
+func stripArr(s string) string {
+	if s == "" || s[0]!='['  || s[len(s)-1]!=']'{
+		return s
+	}
+	return s[1 : len(s)-1]
+}
+
+func stripNewLine(s string) string {
+	if s == "" || s[0]!='\n' {
+		return s
+	}
+	return s[1 :]
+}
+
 func captical(s string) string {
 	if s == "" {
 		return s

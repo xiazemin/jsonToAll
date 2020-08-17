@@ -10,6 +10,7 @@ import (
 type Node struct {
 	Type string
 	Value string
+	ValueType string
 }
 
 type Listener struct {
@@ -17,6 +18,7 @@ type Listener struct {
 	gocodeMap map[antlr.Tree]Node `json:"gocode_map"`
 	JsonStr string
 	Target Target
+	SubStructs []string
 }
 
 func NewJsonToGoListener(t Target) *Listener {
@@ -64,12 +66,19 @@ func (l*Listener) ExitObj(ctx *parser.ObjContext) {
 	sb := strings.Builder{}
 	sb.WriteString(l.Target.PreExitObj("",""))
 	for i,p:=range ctx.AllPair(){
-		sb.WriteString(l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1))
+		switch l.Target.(type) {
+		case *IdlTarget:
+			sb.WriteString(fmt.Sprintf("%d: ",i+1)+l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1))
+		default:
+			sb.WriteString(l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1))
+		}
+
 	}
 	sb.WriteString(l.Target.PostExitObj("",""))
 	l.gocodeMap[ctx]=Node{
 		Type:  "struct",
 		Value: sb.String(),
+		ValueType:"pair",
 	}
 }
 
@@ -78,10 +87,17 @@ func (l*Listener) EnterPair(ctx *parser.PairContext) {}
 
 // ExitPair is called when production pair is exited.
 func (l*Listener) ExitPair(ctx *parser.PairContext) {
+	subStruct,pair:=l.Target.ExitPair(0,ctx.STRING().GetText(),l.gocodeMap[ctx.Value()].Type,
+		l.gocodeMap[ctx.Value()].Value,l.gocodeMap[ctx.Value()].ValueType)
 	l.gocodeMap[ctx]=Node{
 		Type:  "KV",
-		Value: l.Target.ExitPair(ctx.STRING().GetText(),l.gocodeMap[ctx.Value()].Type,l.gocodeMap[ctx.Value()].Value),
+		Value: pair,
+		ValueType:l.gocodeMap[ctx.Value()].Type,
 	}
+
+	//if l.gocodeMap[ctx.Value()].Type=="struct"{
+		l.SubStructs=append(l.SubStructs,subStruct)
+	//}
 	//fmt.Println(ctx.Value().GetText(),"======>",l.gocodeMap[ctx.Value()])
 }
 
@@ -93,6 +109,7 @@ func (l*Listener) ExitArr(ctx *parser.ArrContext) {
 	l.gocodeMap[ctx]=Node{
 		Type:  "array",
 		Value: l.Target.ExitArr(l.gocodeMap[ctx.Value(0)].Type ,l.gocodeMap[ctx.Value(0)].Value),
+	    ValueType:l.gocodeMap[ctx.Value(0)].Type,
 	}
 	//fmt.Println(ctx.GetChild(0),ctx.Value(0))
 }
@@ -110,12 +127,14 @@ func (l*Listener) ExitValue(ctx *parser.ValueContext) {
 		l.gocodeMap[ctx]=Node{
 			Type:  "float64",
 			Value: l.Target.ExitValue("float64",ctx.NUMBER().GetText()) ,
+			ValueType:"float64",
 		}
 			//l.gocodeMap[ctx.NUMBER()]
 	}else if ctx.STRING()!=nil{
 		l.gocodeMap[ctx]=Node{
 			Type:  "string",
 			Value: l.Target.ExitValue("string",ctx.STRING().GetText()) ,
+			ValueType:"string",
 		}
 			//l.gocodeMap[ctx.STRING()]
 	}else{
@@ -123,16 +142,19 @@ func (l*Listener) ExitValue(ctx *parser.ValueContext) {
 			l.gocodeMap[ctx]=Node{
 				Type:  "bool",
 				Value: l.Target.ExitValue("bool",ctx.GetText()) ,
+				ValueType:ctx.GetText(),
 			}
 		}else if ctx.GetText()=="null"{
 			l.gocodeMap[ctx]=Node{
 				Type:  "null",
 				Value: l.Target.ExitValue("null",ctx.GetText()) ,
+				ValueType:"struct",
 			}
 		}else{
 			l.gocodeMap[ctx]=Node{
 				Type:  "string",
 				Value: l.Target.ExitValue("string",ctx.GetText()) ,
+				ValueType:"string",
 			}
 		}
 	}

@@ -31,3 +31,18 @@ func PutJson(name ,content string) error{
 	f.WriteString(content)
 	return nil
 }
+
+func PutIdl(name string,subStructs []string,content string)error{
+	f,err:=os.Open(name)
+	if err!=nil{
+		f,err=os.Create(name)
+	}
+	defer f.Close()
+	c:="namespace php json.to.idl \n"
+	for _,s:=range subStructs{
+		c+=s
+	}
+	f.WriteString(c+content)
+	//fmt.Println(c,content)
+	return err
+}

@@ -33,8 +33,8 @@ func (j*JsonTarget)PostExitObj(typeStr,valStr string)string{
 	return "}"
 }
 // func (j*JsonTarget)ExitPair is called when production pair is exited.
-func (j*JsonTarget)ExitPair(keyStr,typeStr,valStr string)string{
-	return keyStr+":"+valStr
+func (j*JsonTarget)ExitPair(index int,keyStr,typeStr,valStr,valType string)(string,string){
+	return "",keyStr+":"+valStr
 }
 // func (j*JsonTarget)ExitArr is called when production arr is exited.
 func (j*JsonTarget)ExitArr(typeStr,valStr string)string{

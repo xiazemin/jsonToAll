@@ -7,7 +7,9 @@ struct Aliases{
 }
 struct  Spaces {
 }
-struct Null_{
+struct Null{
+}
+struct NonCamelStyle{
 }
 struct Structs{
 1: string a
@@ -17,6 +19,8 @@ struct Structs{
 5: double f
 6: i32 g
 7: i32 h
+8: NonCamelStyle non_camel_Style
+9: string non_camel_Style_string
 }
 
 struct GeneratedStruct {
@@ -27,7 +31,7 @@ struct GeneratedStruct {
 5: list<Aliases> aliases
 6: Spaces Spaces
 7: list<i32> keys
-8: Null_ null_
+8: Null null_
 9: bool bool_
 10: list<Structs> structs
 }

@@ -1,0 +1,3 @@
+./jsonToIdl union -l ../t.json -r ../t.json
+
+ ./jsonToIdl toIdl -j ../t.json

@@ -20,7 +20,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/xiazemin/json-parser/antlr/jsonToAll/file"
 	"github.com/xiazemin/json-parser/antlr/jsonToAll/generator"
-	"strings"
 )
 
 // toIdlCmd represents the toIdl command
@@ -39,12 +38,7 @@ when define idl from complex json, it's a hard work,
         	fmt.Println("src json file is required")
 			return
 		}
-		na:=strings.Split(jsonName,"/")
-		if len(na)<1{
-			fmt.Println("src json file name is not valid")
-			return
-		}
-		name:= na[len(na)-1]
+        name:=getName(jsonName)
 
 		_,strIdlGen,subStructs:=generator.Gen(jsonName,"idl")
 		//fmt.Println(strIdlOri)
@@ -75,7 +69,7 @@ func init() {
 
 
 	toIdlCmd.Flags().StringVarP(&jsonName, "json", "j", "", "json name (required)")
-	rootCmd.MarkFlagRequired("json")
+	toIdlCmd.MarkFlagRequired("json")
 
 	toIdlCmd.Flags().StringVarP(&dstDir, "dst", "d", ".", "dest dir (optional)")
 }

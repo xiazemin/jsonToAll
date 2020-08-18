@@ -19,6 +19,7 @@ import (
   "fmt"
   "os"
   "github.com/spf13/cobra"
+  "strings"
 
   homedir "github.com/mitchellh/go-homedir"
   "github.com/spf13/viper"
@@ -28,6 +29,8 @@ import (
 
 var cfgFile string
 
+var jsonName1 string
+var jsonName2 string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -88,5 +91,14 @@ func initConfig() {
   if err := viper.ReadInConfig(); err == nil {
     fmt.Println("Using config file:", viper.ConfigFileUsed())
   }
+}
+
+func getName(jsonName string)string  {
+  na:=strings.Split(jsonName,"/")
+  if len(na)<1{
+    fmt.Println("src json file name is not valid")
+    return "default"
+  }
+  return  na[len(na)-1]
 }
 

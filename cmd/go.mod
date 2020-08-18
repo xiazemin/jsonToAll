@@ -13,6 +13,7 @@ require (
 	github.com/xiazemin/json-parser/antlr/jsonToAll/generator v0.0.0-00010101000000-000000000000
 	github.com/xiazemin/json-parser/antlr/jsonToAll/listener v0.0.0-00010101000000-000000000000 // indirect
 	github.com/xiazemin/json-parser/antlr/jsonToAll/parser v0.0.0-00010101000000-000000000000 // indirect
+	github.com/xiazemin/json-parser/antlr/jsonToAll/tool v0.0.0-00010101000000-000000000000
 )
 
 replace github.com/xiazemin/json-parser/antlr/jsonToAll/file => ../file
@@ -22,3 +23,5 @@ replace github.com/xiazemin/json-parser/antlr/jsonToAll/generator => ../generato
 replace github.com/xiazemin/json-parser/antlr/jsonToAll/listener => ../listener
 
 replace github.com/xiazemin/json-parser/antlr/jsonToAll/parser => ../parser
+
+replace github.com/xiazemin/json-parser/antlr/jsonToAll/tool => ../tool

@@ -1,0 +1,1 @@
+[{"Spaces":{},"admin":["parrt","tombu"],"aliases":[],"bool_":true,"description":"An imaginary server config file","host":"antlr.org","keys":[1,2,3,4],"logs":{"dir":"/var/log","level":"verbose"},"structs":[{"a":"a","b":"2","c":12345678901,"d":1.2345678,"f":1e-123,"g":112}]}]

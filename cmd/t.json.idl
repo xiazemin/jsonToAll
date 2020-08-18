@@ -27,13 +27,15 @@ struct GeneratedStruct {
 1: string description //eg:"An imaginary server config file"
 2: Logs logs
 3: string host //eg:"antlr.org"
-4: list<string> admin
+4: list<string> admin //eg:["parrt"]
 5: list<Aliases> aliases
 6: Spaces Spaces
-7: list<i32> keys
-8: Null null_ //eg:null
-9: bool bool_ //eg:true
-10: list<Structs> structs
+7: list<i32> keys //eg:[1]
+8: list<list<float64>> lists //eg:[[1]]
+9: list<list<list<float64>>> lists3 //eg:[[[1]]]
+10: Null null_ //eg:null
+11: bool bool_ //eg:true
+12: list<Structs> structs
 }
 
 struct GeneratedArr {

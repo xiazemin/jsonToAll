@@ -1,3 +1,5 @@
 github.com/antlr/antlr4 v0.0.0-20200712162734-eb1adaa8a7a6 h1:LHiO9PmM+glloVgvAWMK4pzxxbJYYaqV/k+ued9rxSY=
 github.com/antlr/antlr4 v0.0.0-20200712162734-eb1adaa8a7a6/go.mod h1:T7PbCXFs94rrTttyxjbyT5+/1V8T2TYDejxUfHJjw1Y=
+github.com/antlr/antlr4 v0.0.0-20200819162015-533f63382ac9 h1:Xb0gNiE+jAXrZzbUJHSbaKB1cqXoAiFV3ybqISDlpE4=
+github.com/antlr/antlr4 v0.0.0-20200819162015-533f63382ac9/go.mod h1:T7PbCXFs94rrTttyxjbyT5+/1V8T2TYDejxUfHJjw1Y=
 github.com/xiazemin/json-parser v0.0.0-20200712132701-4c3d22cd7701 h1:c7R99pEqUjkM7F880nRZQF68825ERhQ0EixHEmFc02Y=

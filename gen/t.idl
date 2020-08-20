@@ -1,34 +1,54 @@
 namespace php json.to.idl 
 struct  Logs {
-1: string level
-2: string dir
+1: string level //eg:"verbose"
+2: string dir //eg:"/var/log"
 }
 struct Aliases{
 }
 struct  Spaces {
 }
-struct Null_{
+struct Null{
+}
+struct  K123 {
+}
+struct  K435 {
+1: string a //eg:"23"
+2: string 3 //eg:"7"
+}
+struct  Map {
+1: K123 123
+2: string 12133 //eg:"123"
+3: i32 34 //eg:12
+4: K435 435
+}
+struct NonCamelStyle{
 }
 struct Structs{
-1: string a
-2: string b
-3: i64 c
-4: double d
-5: double f
-6: i32 g
+1: string a //eg:"a"
+2: string b //eg:"2"
+3: i64 c //eg:12345678901
+4: double d //eg:1.2345678
+5: double f //eg:1e-123
+6: i32 g //eg:112
+7: i32 h //eg:0
+8: NonCamelStyle non_camel_Style //eg:null
+9: string non_camel_Style_string //eg:"non_camel_Style_string"
 }
 
 struct GeneratedStruct {
-1: string description
+1: string description //eg:"An imaginary server config file"
 2: Logs logs
-3: string host
-4: list<string> admin
+3: string host //eg:"antlr.org"
+4: list<string> admin //eg:["parrt"]
 5: list<Aliases> aliases
 6: Spaces Spaces
-7: list<i32> keys
-8: Null_ null_
-9: bool bool_
-10: list<Structs> structs
+7: list<i32> keys //eg:[1]
+8: list<list<float64>> lists //eg:[[1]]
+9: list<list<list<float64>>> lists3 //eg:[[[1]]]
+10: Null null_ //eg:null
+11: bool bool_ //eg:true
+12: Map map
+13: list<Structs> structs
 }
 
 struct GeneratedArr {

@@ -1,6 +1,8 @@
 package listener
 
-import "regexp"
+import (
+	"regexp"
+)
 
 type IdlTarget struct {
 
@@ -40,23 +42,31 @@ func (i*IdlTarget)PostExitObj(typeStr,valStr string)string{
 // func (i*IdlTarget)ExitPair is called when production pair is exited.
 func (i*IdlTarget)ExitPair(index int,keyStr,typeStr,valStr,valType string)(string,string){
 	if typeStr=="struct"{
-		return typeStr+" "+ " "+captical(stripQuotes(keyStr)) +" "+stripNewLine(valStr)+"\n",captical(stripQuotes(keyStr))+" "+stripQuotes(keyStr)//captical(stripQuotes(keyStr))+":"+keyStr
+		if IsNumber(keyStr){
+			return typeStr+" "+ " "+camel(stripQuotes(keyStr)) +" "+stripNewLine(valStr)+"\n",camel(stripQuotes(keyStr))+" "+stripQuotes(keyStr)
+			//fmt.Println("number key",valStr)
+			//return  "","map<string,string>"
+		}
+		return typeStr+" "+ " "+camel(stripQuotes(keyStr)) +" "+stripNewLine(valStr)+"\n",camel(stripQuotes(keyStr))+" "+stripQuotes(keyStr)//camel(stripQuotes(keyStr))+":"+keyStr
 	}
 
 	if typeStr=="array"{
 		if valType=="struct" {
-			return "struct"+" "+captical(stripQuotes(keyStr)) +stripNewLine(stripArr(valStr))+"\n","list<"+captical(stripQuotes(keyStr))+"> "+stripQuotes(keyStr)
+			return "struct"+" "+camel(stripQuotes(keyStr)) +stripNewLine(stripArr(valStr))+"\n","list<"+camel(stripQuotes(keyStr))+"> "+stripQuotes(keyStr)
 		}
 		if valType==""{
-			return "struct"+" "+captical(stripQuotes(keyStr)) +"{\n}\n","list<"+captical(stripQuotes(keyStr))+"> "+stripQuotes(keyStr)
+			return "struct"+" "+camel(stripQuotes(keyStr)) +"{\n}\n","list<"+camel(stripQuotes(keyStr))+"> "+stripQuotes(keyStr)
 		}
-		return "","list<"+i.typeMap(valType,valStr)+"> "+stripQuotes(keyStr)
+		if valType=="array"{
+			return "","list< "+i.typeMap(valType,valStr)+"> "+stripQuotes(keyStr) +" //eg:"+removeEndline(valStr)
+		}
+		return "","list<"+i.typeMap(valType,valStr)+"> "+stripQuotes(keyStr) +" //eg:"+removeEndline(valStr)
 	}
 
 	if typeStr=="null"{
-		return  "struct"+" "+captical(stripQuotes(keyStr)) +"{\n}\n",captical(stripQuotes(keyStr))+" "+stripQuotes(keyStr)//keyStr+":"+valStr
+		return  "struct"+" "+camel(stripQuotes(keyStr)) +"{\n}\n",camel(stripQuotes(keyStr))+" "+stripQuotes(keyStr) +" //eg:"+valStr//keyStr+":"+valStr
 	}
-	return "",i.typeMap(valType,valStr)+" "+stripQuotes(keyStr)//keyStr+":"+valStr
+	return "",i.typeMap(valType,valStr)+" "+stripQuotes(keyStr)+" //eg:"+valStr//keyStr+":"+valStr
 }
 // func (i*IdlTarget)ExitArr is called when production arr is exited.
 func (i*IdlTarget)ExitArr(typeStr,valStr string)string{
@@ -68,12 +78,16 @@ func (i*IdlTarget)ExitValue(typeStr,valStr string)string{
 }
 
 func (i*IdlTarget)typeMap(valType,val string) string {
+	if valType=="array"{
+		return "list<"+valType+">"
+	}
+
 	if valType=="true"|| valType=="false"{
 		return "bool"
 	}
 
 	if valType=="float64"{
-		f,_:=regexp.Compile("^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+|0)$")
+		f,_:=regexp.Compile("^-?([1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|0?\\.0+)$")
 		fe,_:=regexp.Compile( "^-?((\\d+\\.?\\d*)|(\\.\\d+))[Ee][+-]?\\d+$")
 		if f.Match([]byte(val))||fe.Match([]byte(val)){
 			return "double"

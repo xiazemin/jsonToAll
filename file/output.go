@@ -1,6 +1,7 @@
 package file
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 )
@@ -33,7 +34,7 @@ func PutJson(name ,content string) error{
 }
 
 func PutIdl(name string,subStructs []string,content string)error{
-	f,err:=os.Open(name)
+	f,err:=os.OpenFile(name,os.O_WRONLY|os.O_TRUNC,0777)
 	if err!=nil{
 		f,err=os.Create(name)
 	}
@@ -46,3 +47,15 @@ func PutIdl(name string,subStructs []string,content string)error{
 	//fmt.Println(c,content)
 	return err
 }
+
+func Save(name,content string) error  {
+	f,err:=os.Open(name)
+	if err!=nil{
+		f,err=os.Create(name)
+	}
+	defer f.Close()
+	fmt.Println(name,content)
+	f.WriteString(content)
+	return err
+}
+

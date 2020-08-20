@@ -6,10 +6,16 @@
   "aliases": [  ],
   "Spaces": { },
   "keys":[1,2,3,4],
+  "lists": [[1,2,3,4],[5,6,7,8,9]],
+  "lists3": [[[1,2],[3,4]],[[5,6],[7,8,9]]],
   "null_": null,
   "bool_": true,
+  "map": {"123": {},"12133": "123","34":12,"435": {"a": "23","3": "7"}},
   "structs":[{"a":"a","b":"2","c": 12345678901,
     "d": 1.2345678,
     "f": 1e-123,
-     "g": 112}]
+     "g": 112,
+  "h": 0,
+  "non_camel_Style": null,
+    "non_camel_Style_string": "non_camel_Style_string"}]
 }]

@@ -8,6 +8,11 @@ replace github.com/xiazemin/json-parser/antlr/jsonToAll/listener => ./listener
 
 replace github.com/xiazemin/json-parser/antlr/jsonToAll/file => ./file
 
-require github.com/antlr/antlr4 v0.0.0-20200712162734-eb1adaa8a7a6
+require (
+	github.com/antlr/antlr4 v0.0.0-20200819162015-533f63382ac9
+	github.com/xiazemin/json-parser/antlr/jsonToAll/file v0.0.0-00010101000000-000000000000
+	github.com/xiazemin/json-parser/antlr/jsonToAll/generator v0.0.0-00010101000000-000000000000
+	github.com/xiazemin/json-parser/antlr/jsonToAll/listener v0.0.0-00010101000000-000000000000 // indirect
+)
 
 replace github.com/xiazemin/json-parser/antlr/jsonToAll/generator => ./generator

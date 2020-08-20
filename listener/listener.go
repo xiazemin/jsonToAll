@@ -106,10 +106,16 @@ func (l*Listener) EnterArr(ctx *parser.ArrContext) {}
 
 // ExitArr is called when production arr is exited.
 func (l*Listener) ExitArr(ctx *parser.ArrContext) {
+	ValueType:=""
+	if l.gocodeMap[ctx.Value(0)].Type=="array"{
+		ValueType="list<"+l.gocodeMap[ctx.Value(0)].ValueType+">"
+	}else{
+		ValueType=l.gocodeMap[ctx.Value(0)].Type
+	}
 	l.gocodeMap[ctx]=Node{
 		Type:  "array",
 		Value: l.Target.ExitArr(l.gocodeMap[ctx.Value(0)].Type ,l.gocodeMap[ctx.Value(0)].Value),
-	    ValueType:l.gocodeMap[ctx.Value(0)].Type,
+	    ValueType:ValueType,
 	}
 	//fmt.Println(ctx.GetChild(0),ctx.Value(0))
 }

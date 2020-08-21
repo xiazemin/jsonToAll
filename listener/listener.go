@@ -11,6 +11,7 @@ type Node struct {
 	Type string
 	Value string
 	ValueType string
+	KeyIsNum bool
 }
 
 type Listener struct {
@@ -61,16 +62,25 @@ func (l*Listener) ExitJson(ctx *parser.JsonContext) {
 // EnterObj is called when production obj is entered.
 func (l*Listener) EnterObj(ctx *parser.ObjContext) {}
 
+func (l*Listener)isMap(ctx *parser.ObjContext) bool{
+	for _,p:=range ctx.AllPair(){
+		if l.gocodeMap[p].KeyIsNum{
+			return  true
+		}
+	}
+	return false
+}
 // ExitObj is called when production obj is exited.
 func (l*Listener) ExitObj(ctx *parser.ObjContext) {
 	sb := strings.Builder{}
 	sb.WriteString(l.Target.PreExitObj("",""))
+	bIsMap:=l.isMap(ctx)
 	for i,p:=range ctx.AllPair(){
 		switch l.Target.(type) {
 		case *IdlTarget:
-			sb.WriteString(fmt.Sprintf("%d: ",i+1)+l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1))
+			sb.WriteString(fmt.Sprintf("%d: ",i+1)+l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1,bIsMap))
 		default:
-			sb.WriteString(l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1))
+			sb.WriteString(l.Target.ExitObj(l.gocodeMap[p].Type,l.gocodeMap[p].Value,i==len(ctx.AllPair())-1,bIsMap))
 		}
 
 	}
@@ -93,6 +103,7 @@ func (l*Listener) ExitPair(ctx *parser.PairContext) {
 		Type:  "KV",
 		Value: pair,
 		ValueType:l.gocodeMap[ctx.Value()].Type,
+		KeyIsNum:IsNumber(ctx.STRING().GetText()),
 	}
 
 	//if l.gocodeMap[ctx.Value()].Type=="struct"{

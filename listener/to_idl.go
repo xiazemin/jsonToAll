@@ -27,7 +27,7 @@ func (i*IdlTarget)PreExitObj(typeStr,valStr string)string{
 	//return "{"+valStr+"}"
 	return "{\n"
 }
-func (i*IdlTarget)ExitObj(typeStr,valStr string,isEnd bool)string{
+func (i*IdlTarget)ExitObj(typeStr,valStr string,isEnd bool,bIsMap bool)string{
 	//return "{"+valStr+"}"
 	//fmt.Println(typeStr,valStr,isEnd)
 	if isEnd{

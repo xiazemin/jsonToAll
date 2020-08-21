@@ -10,7 +10,7 @@ func (t*GoTarget)ExitJson(typeStr,valStr string)string{
 func (t*GoTarget)PreExitObj(typeStr,valStr string)string{
 	return " struct {\n"
 }
-func (t*GoTarget)ExitObj(typeStr,valStr string,isEnd bool)string{
+func (t*GoTarget)ExitObj(typeStr,valStr string,isEnd bool,bIsMap bool)string{
 	return valStr+"\n"
 }
 func (t*GoTarget)PostExitObj(typeStr,valStr string)string{
